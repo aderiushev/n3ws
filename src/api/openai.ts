@@ -4,8 +4,8 @@ import { PERPLEXITY_API_KEY } from '@env';
 import { NewsItem, NewsCategory } from '../types/news';
 import { newsCache } from './newsCache';
 
-// Fallback API key (temporary workaround for react-native-dotenv issues)
-const API_KEY = PERPLEXITY_API_KEY || 'PERPLEXITY_API_KEY';
+// Use API key from environment variables
+const API_KEY = PERPLEXITY_API_KEY;
 
 // Configure axios for Chat Completions API
 const apiClient = axios.create({
