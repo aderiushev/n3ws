@@ -4,6 +4,8 @@ import { YStack, Button, H2, Text, ScrollView, XStack } from 'tamagui';
 import * as Haptics from 'expo-haptics';
 import { useNewsStore } from '../store/newsStore';
 import { NewsList } from '../components/NewsList';
+import { CacheStatusIndicator } from '../components/CacheStatusIndicator';
+import { VersionDisplay } from '../components/VersionDisplay';
 import { fetchNews } from '../api/openai';
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { newsCache } from '../api/newsCache';
@@ -39,7 +41,7 @@ export const HomeScreen: React.FC = () => {
     }
   };
 
-  // Update cache status every second
+  // Update cache status every second - centralized timer logic
   useEffect(() => {
     const updateCacheStatus = () => {
       const age = newsCache.getAge();
@@ -90,23 +92,6 @@ export const HomeScreen: React.FC = () => {
       return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
     return `${seconds}s`;
-  };
-
-  // Format cache age for "Updated X ago"
-  const formatCacheAge = (ms: number | null): string => {
-    if (ms === null) return '';
-
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-
-    if (minutes === 0) {
-      return 'just now';
-    } else if (minutes === 1) {
-      return '1 minute ago';
-    } else if (minutes < 60) {
-      return `${minutes} minutes ago`;
-    }
-    return 'over an hour ago';
   };
 
   // Format timestamp to readable date
@@ -182,14 +167,11 @@ export const HomeScreen: React.FC = () => {
         </YStack>
       </ScrollView>
 
+      {/* Version display - fixed at bottom */}
+      <VersionDisplay />
+
       {/* Cache status indicator */}
-      {cacheAge !== null && cacheAge > 0 && (
-        <YStack bg="$gray2" px="$3" py="$2" borderTopWidth={1} borderTopColor="$gray6">
-          <Text fontSize="$2" color="$gray11" text="center">
-            Updated {formatCacheAge(cacheAge)}
-          </Text>
-        </YStack>
-      )}
+      <CacheStatusIndicator cacheAge={cacheAge} />
 
       {/* Button - fixed at bottom */}
       <TouchableOpacity
