@@ -1,0 +1,10 @@
+{
+  "name": "shared-storage",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {},
+  "dependencies": {
+    "expo-modules-core": "*"
+  }
+}
+

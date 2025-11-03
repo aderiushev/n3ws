@@ -19,6 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.aderiushev.n3ws",
+      "appleTeamId": "32RFJTG8M6",
       "splash": {
         "image": "./assets/splash-icon.png",
         "resizeMode": "cover",
@@ -26,6 +27,9 @@
       },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "com.apple.security.application-groups": ["group.com.aderiushev.n3ws"]
       }
     },
     "android": {
@@ -48,13 +52,39 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
+
     "plugins": [
       "expo-font",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#0a7ea4",
+          "sounds": [],
+          "mode": "production"
+        }
+      ],
+      "@bacons/apple-targets"
     ],
     "extra": {
       "eas": {
-        "projectId": "156cb513-ca6c-4034-96f2-5831735318cd"
+        "projectId": "156cb513-ca6c-4034-96f2-5831735318cd",
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "bundleIdentifier": "com.aderiushev.n3ws.N3WSWidget",
+                  "targetName": "N3WSWidget",
+                  "entitlements": {
+                    "com.apple.security.application-groups": ["group.com.aderiushev.n3ws"]
+                  }
+                }
+              ]
+            }
+          }
+        }
       }
     },
     "owner": "aderushev"

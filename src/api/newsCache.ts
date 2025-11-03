@@ -10,7 +10,7 @@ const CACHE_KEY = '@n3ws:newsCache';
 
 class NewsCache {
   private cache: CacheEntry | null = null;
-  private readonly CACHE_DURATION_MS = 10 * 60 * 1000; // 10 mins
+  private readonly CACHE_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
   private initialized = false;
 
   // Initialize cache from AsyncStorage on app startup

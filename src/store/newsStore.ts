@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { NewsItem, NewsByCategory, NewsCategory } from '../types/news';
+import { WidgetService } from '../services/widgetService';
 
 interface NewsState {
   news: NewsByCategory;
@@ -34,6 +35,17 @@ export const useNewsStore = create<NewsState>((set) => ({
         }
 
         updatedNews[category] = categoryNews;
+      });
+
+      // Update widget with new news
+      const allNews = [
+        ...updatedNews.Russia,
+        ...updatedNews.Spain,
+        ...updatedNews.World,
+      ];
+
+      WidgetService.updateWidgetData(allNews).catch((error) => {
+        console.error('Failed to update widget:', error);
       });
 
       return { news: updatedNews };
